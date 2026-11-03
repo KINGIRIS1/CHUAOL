@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  client:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Unit test
+        run: pnpm test
+      - name: Build
+        run: pnpm build
+      - name: Cài Chromium cho Playwright
+        run: pnpm --filter @chuaol/client exec playwright install --with-deps chromium
+      - name: Smoke test end-to-end
+        run: pnpm e2e
+      - name: Lưu ảnh chụp kiểm thử
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-output
+          path: apps/client/e2e/output
+          if-no-files-found: ignore

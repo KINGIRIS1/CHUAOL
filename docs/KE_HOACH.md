@@ -1,6 +1,6 @@
 # Kế hoạch phát triển CHUAOL — Chùa Online 3D trên nền tảng Three.js
 
-> Phiên bản: 0.1 (bản nháp đầu tiên) · Ngày lập: 03/11/2026
+> Phiên bản: 0.2 · Ngày lập: 03/11/2026 · Cập nhật: 03/11/2026 (chốt quyết định, có bản chơi thử)
 > Phạm vi: tầm nhìn sản phẩm, thiết kế trải nghiệm, kiến trúc kỹ thuật, lộ trình, đội ngũ, rủi ro, pháp lý.
 
 ---
@@ -465,24 +465,29 @@ Mục tiêu sẽ được hiệu chỉnh sau khi có dữ liệu thật từ dem
 
 ---
 
-## 12. Các quyết định cần chốt
+## 12. Các quyết định đã chốt (03/11/2026)
 
-1. **Quy mô đội và ngân sách** thực tế → hiệu chỉnh lại lộ trình ở mục 5.
-2. **Chùa nguyên bản hay chùa thật?** Khuyến nghị: bắt đầu bằng chùa nguyên bản, song song tìm chùa đối tác cho GĐ5.
-3. **Góc nhìn**: khuyến nghị góc thứ ba (dễ cảm nhận không gian và thấy avatar người khác); góc thứ nhất là tùy chọn.
-4. **Mức độ giao tiếp**: câu mẫu (khuyến nghị cho MVP) hay chat tự do.
-5. **Mô hình bền vững**: chọn tổ hợp từ mục 8.
-6. **Tên và nhận diện thương hiệu** (CHUAOL / "Chùa Online" / tên khác).
-7. Có cần **app native** ở năm đầu không (khuyến nghị: chưa; dùng PWA).
+| # | Quyết định | Đã chốt |
+|---|---|---|
+| 1 | Quy mô đội và ngân sách | Giữ giả định ở mục 1.4 và mục 6; hiệu chỉnh lộ trình khi có con số thực tế |
+| 2 | Chùa nguyên bản hay chùa thật | Chùa nguyên bản, lấy cảm hứng chùa Bắc Bộ; tìm chùa đối tác song song cho GĐ5 |
+| 3 | Góc nhìn | Góc thứ ba |
+| 4 | Mức độ giao tiếp | Câu mẫu và cử chỉ ở MVP; chat tự do sau khi kiểm duyệt chạy ổn |
+| 5 | Mô hình bền vững | Theo mục 8: miễn phí phần tâm linh, tùy hỷ ủng hộ, trang phục, hợp tác chùa |
+| 6 | Tên gọi | Tạm dùng CHUAOL / "Chùa Online" |
+| 7 | App native năm đầu | Chưa; dùng web/PWA |
+
+Các quyết định kỹ thuật phát sinh khi làm bản chơi thử được ghi trong [ADR 0001](ADR/0001-rendering-stack.md). Thay đổi so với mục 4.1: bản chơi thử chưa dùng drei và Rapier (mặt bằng phẳng, va chạm 2D tự viết là đủ).
 
 ---
 
 ## 13. Việc cần làm ngay (2 tuần đầu)
 
-1. Chốt các quyết định ở mục 12.
-2. Liên hệ và mời cố vấn Phật giáo; lên lịch khảo sát chùa.
-3. Dựng monorepo (`apps/client`, `apps/server`, `packages/shared`) + CI + bản preview.
-4. Tech spike: greybox chùa + 30 avatar giả lập, đo trên máy chuẩn, ghi kết quả vào `docs/ADR/0001-rendering-stack.md`.
-5. Moodboard + concept art Tam quan và Chính điện; bắt đầu viết `docs/ART_BIBLE.md`.
-6. Gặp luật sư theo danh sách ở mục 9.
-7. Viết `docs/GDD.md` chi tiết cho phạm vi MVP.
+- [x] Chốt các quyết định ở mục 12.
+- [ ] Liên hệ và mời cố vấn Phật giáo; lên lịch khảo sát chùa.
+- [x] Dựng monorepo + CI. Hiện có `apps/client`; `apps/server` và `packages/shared` sẽ thêm khi làm multiplayer ở GĐ2. Bản preview cho mỗi PR chưa làm.
+- [x] Tech spike và bản chơi thử offline (`apps/client`): chùa dựng bằng code, 30–80 khách mô phỏng, đủ 6 hoạt động MVP. Kết quả ghi trong [ADR 0001](ADR/0001-rendering-stack.md).
+- [ ] Đo FPS bản chơi thử trên 2–3 máy Android tầm trung và một iPhone cũ, ghi bổ sung vào ADR 0001.
+- [ ] Moodboard + concept art Tam quan và Chính điện; bắt đầu viết `docs/ART_BIBLE.md`.
+- [ ] Gặp luật sư theo danh sách ở mục 9.
+- [ ] Viết `docs/GDD.md` chi tiết cho phạm vi MVP, dựa trên phản hồi từ bản chơi thử.

@@ -1,0 +1,13 @@
+{
+  "name": "chuaol",
+  "private": true,
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "dev": "pnpm --filter @chuaol/client dev",
+    "build": "pnpm --filter @chuaol/client build",
+    "preview": "pnpm --filter @chuaol/client preview",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "e2e": "pnpm --filter @chuaol/client e2e"
+  }
+}
