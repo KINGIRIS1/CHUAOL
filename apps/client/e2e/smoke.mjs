@@ -15,7 +15,15 @@ const PORT = 4179
 const t0 = Date.now()
 const log = (...a) => console.log(`[${((Date.now() - t0) / 1000).toFixed(1)}s]`, ...a)
 
-const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], { cwd: root, stdio: 'pipe' })
+// detached: tạo nhóm tiến trình riêng để tắt được cả vite lẫn npx khi xong
+const server = spawn('npx', ['vite', 'preview', '--port', String(PORT), '--strictPort'], { cwd: root, stdio: 'pipe', detached: true })
+const stopServer = () => {
+  try {
+    process.kill(-server.pid, 'SIGTERM')
+  } catch {
+    server.kill()
+  }
+}
 await new Promise((resolve, reject) => {
   const timer = setTimeout(() => reject(new Error('vite preview không khởi động được')), 30000)
   server.stdout.on('data', (d) => {
@@ -25,6 +33,9 @@ await new Promise((resolve, reject) => {
     }
   })
   server.on('exit', (code) => reject(new Error(`vite preview thoát với mã ${code}`)))
+}).catch((e) => {
+  stopServer()
+  throw e
 })
 
 // Render WebGL bằng phần mềm (SwiftShader) để chạy được trên máy CI không có GPU
@@ -140,7 +151,7 @@ try {
   })
 } finally {
   await browser.close()
-  server.kill()
+  stopServer()
 }
 
 if (failed) {
@@ -148,3 +159,4 @@ if (failed) {
   process.exit(1)
 }
 log('Smoke test đạt')
+process.exit(0)
